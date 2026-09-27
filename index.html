@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I⁴ — International Institute of Innovation &amp; Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-primary:#3359d3;
+    --blue-dark:#1d4ed8;
+    --blue-darker:#1e40af;
+    --blue-navy:#1e3a8a;
+    --blue-action:#1b56ec;
+    --blue-accent:#2563eb;
+    --blue-link:#1d4ed8;
+    --blue-50:#eff6ff;
+    --blue-100:#dbeafe;
+    --blue-200:#bfdbfe;
+    --blue-300:#93c5fd;
+    --blue-400:#60a5fa;
+    --blue-bg-tint:#f0f5ff;
+    --slate-900:#0f172a;
+    --slate-700:#334155;
+    --slate-600:#475569;
+    --near-black:#010101;
+    --gray-body:#474747;
+    --white:#ffffff;
+    --max-w:1280px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Outfit', sans-serif;
+    color:var(--slate-900);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;margin:0;padding:0;}
+  .wrap{max-width:var(--max-w);margin:0 auto;padding:0 32px;}
+  .pill{
+    display:inline-flex;align-items:center;
+    padding:5px 15px;border-radius:9999px;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:600;font-size:12px;letter-spacing:.3px;text-transform:uppercase;
+    backdrop-filter:blur(2px);
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.2);
+    color:var(--blue-100);
+  }
+  .pill.light{background:var(--blue-50);border-color:var(--blue-400);color:var(--blue-link);backdrop-filter:none;}
+  .chip{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--white);color:var(--blue-primary);
+    padding:5px 12px;font-weight:600;
+  }
+  .chip.on-white{background:var(--blue-primary);color:var(--white);}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;
+    padding:12px 32px;cursor:pointer;border:none;transition:transform .15s ease, background .2s ease;
+  }
+  .btn-primary{background:var(--blue-primary);color:var(--white);box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);}
+  .btn-primary:hover{background:var(--blue-dark);}
+  .btn-outline{background:transparent;color:var(--blue-primary);border:2px solid rgba(51,89,211,.8);padding:10px 30px;}
+  .btn-outline:hover{background:rgba(51,89,211,.08);}
+  .btn-outline-white{background:transparent;color:var(--white);border:2px solid var(--white);padding:14px 24px;font-family:'ABeeZee',sans-serif;font-size:12px;letter-spacing:.6px;text-transform:uppercase;}
+  .btn-outline-white:hover{background:rgba(255,255,255,.12);}
+
+  /* ---------- NAV ---------- */
+  .navbar{
+    position:sticky;top:16px;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;
+    max-width:1065px;margin:16px auto;
+    padding:12px 24px;
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.6);
+    box-shadow:10px 10px 25px 6px rgba(30,58,138,0.1);
+    border-radius:16px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:44px;width:auto;}
+  .nav-links{display:flex;align-items:center;gap:28px;}
+  .nav-links a{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px;color:var(--slate-700);}
+  .nav-links a:hover{color:var(--blue-primary);}
+  .nav-cta{background:var(--blue-action);color:var(--white);font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:12px;padding:10px 20px;box-shadow:0 1px 1px rgba(0,0,0,.05);}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;}
+  .nav-toggle span{display:block;width:24px;height:2px;background:var(--slate-700);margin:5px 0;transition:.2s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:88px 32px 96px;
+    text-align:center;
+    overflow:hidden;
+    box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);
+  }
+  /* background network graphic: faint everywhere, revealed at full clarity in a radius around the cursor */
+  .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;}
+  .hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .hero-bg-scrim{
+    position:absolute;inset:0;
+    background:var(--white);
+    -webkit-mask-image:radial-gradient(circle at var(--mx,50%) var(--my,30%), transparent 0px, transparent 90px, rgba(255,255,255,.86) 320px);
+    mask-image:radial-gradient(circle at var(--mx,50%) var(--my,30%), transparent 0px, transparent 90px, rgba(255,255,255,.86) 320px);
+    transition:-webkit-mask-image .4s ease, mask-image .4s ease;
+  }
+  .hero-inner{position:relative;z-index:1;max-width:1024px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px;}
+  @media (max-width:768px){
+    .hero-bg{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-bg-video{display:none;}
+  }
+  .hero h1{
+    font-weight:700;font-size:48px;line-height:52px;letter-spacing:-1.3px;
+    color:var(--blue-primary);margin:0;
+  }
+  .hero h1 .hl{color:var(--white);background:var(--blue-primary);padding:2px 10px;}
+  .hero .lede{font-family:'Outfit',sans-serif;font-weight:600;font-size:20px;color:var(--blue-primary);max-width:768px;margin:0;}
+  .hero .body{font-size:18px;color:var(--blue-primary);max-width:768px;line-height:24px;margin:0;}
+  .hero .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding-top:24px;}
+
+  /* ---------- SECTION shared ---------- */
+  section{width:100%;}
+  .section-pad{padding:80px 32px;}
+  .section-head{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;margin-bottom:48px;}
+  .section-head h2{font-family:'Outfit',sans-serif;font-weight:600;font-size:36px;letter-spacing:-1.3px;margin:0;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;}
+  .section-head p{font-size:16px;max-width:672px;margin:0;line-height:24px;}
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--blue-primary);color:var(--white);}
+  .about-top{padding:64px 32px 0;}
+  .about-grid{
+    max-width:var(--max-w);margin:0 auto;
+    display:grid;grid-template-columns:1.7fr 1fr;gap:48px;align-items:center;
+    padding-bottom:64px;
+  }
+  .about-copy .pill{margin-bottom:24px;}
+  .about-copy h2{font-weight:700;font-size:44px;line-height:1.15;letter-spacing:-1.3px;margin:0 0 24px;}
+  .about-copy p{font-size:18px;line-height:24px;opacity:.95;margin:0 0 28px;color:var(--blue-100);}
+  .eco-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:32px 0;
+  }
+  .eco-item{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;}
+  .eco-item img{width:40px;height:40px;object-fit:contain;filter:brightness(0) invert(1);opacity:.95;}
+  .eco-item span{font-size:11px;line-height:14px;opacity:.9;color:var(--blue-100);}
+  .about-visual{display:flex;justify-content:center;}
+  .about-visual .card{
+    border-radius:28px;overflow:hidden;
+    backdrop-filter:blur(6px);
+    filter:drop-shadow(0 25px 25px rgba(0,0,0,.25));
+    max-width:384px;width:100%;
+  }
+  .about-visual img{width:100%;height:auto;border-radius:20px;}
+
+  .divider-line{border:none;border-top:1px solid rgba(255,255,255,.25);max-width:calc(var(--max-w) - 64px);margin:0 auto;}
+
+  /* mission/vision */
+  .mv{padding:64px 32px;max-width:var(--max-w);margin:0 auto;}
+  .mv .section-head h2{color:var(--white);}
+  .mv .section-head p{color:var(--blue-100);}
+  .mv-cards{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .mv-card{
+    background:var(--white);border:1px solid var(--blue-100);
+    padding:41px;box-shadow:0 1px 2px rgba(0,0,0,.05);
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .mv-card .badge{
+    align-self:flex-start;background:var(--blue-50);border:1px solid var(--blue-200);
+    padding:7px 17px;border-radius:9999px;font-family:'ABeeZee',sans-serif;
+    font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-link);
+  }
+  .mv-card.vision .badge{border-color:var(--blue-400);}
+  .mv-card h3{font-weight:600;font-size:32px;line-height:1.3;letter-spacing:-1.3px;margin:8px 0 0;color:var(--slate-900);}
+  .mv-card h3 .accent{color:var(--blue-accent);}
+  .mv-card p{font-size:17px;line-height:24px;color:#111;text-align:justify;margin:0;}
+
+  /* why i4 */
+  .why{padding:64px 32px 80px;max-width:var(--max-w);margin:0 auto;}
+  .why .section-head h2{color:var(--white);}
+  .why-cards{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .why-card{background:var(--white);border:1px solid #e2e8f0;padding:33px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05));display:flex;flex-direction:column;gap:16px;}
+  .why-card h3{font-family:'ABeeZee',sans-serif;font-weight:400;font-size:18px;margin:0;color:var(--slate-900);}
+  .why-card p{font-family:'ABeeZee',sans-serif;font-size:14px;line-height:22.75px;color:var(--slate-900);margin:0;}
+  .formula-box{border:1px solid var(--blue-200);padding:17px;display:flex;flex-direction:column;align-items:center;gap:4px;}
+  .formula-box .label{font-family:'ABeeZee',sans-serif;font-size:12px;color:var(--blue-accent);text-transform:uppercase;}
+  .formula-box .formula{font-family:'ABeeZee',sans-serif;font-size:16px;color:var(--blue-navy);text-align:center;}
+  .why-card .core-tag{display:flex;align-items:center;gap:8px;}
+  .why-card .core-tag .dot{width:8px;height:8px;border-radius:9999px;background:var(--blue-accent);}
+  .why-card .core-tag span{font-family:'ABeeZee',sans-serif;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-accent);}
+  .why-card .core-body{color:var(--slate-600) !important;}
+
+  /* ---------- AREAS OF EXCELLENCE ---------- */
+  .excellence{background:var(--blue-bg-tint);}
+  .excellence .section-head h2{color:var(--slate-900);}
+  .ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:35px;max-width:var(--max-w);margin:0 auto;}
+  .ex-card{background:var(--white);display:flex;flex-direction:column;gap:11px;padding:20px 17px;overflow:hidden;}
+  .ex-card img{width:100%;height:200px;object-fit:cover;}
+  .ex-card h3{font-weight:600;font-size:22px;margin:0;color:var(--near-black);}
+  .ex-card p{font-size:13px;line-height:19px;color:var(--gray-body);margin:0;}
+  .ex-card hr{border:none;border-top:1px solid var(--blue-100);width:100%;margin:0;}
+
+  /* ---------- PROGRAMS ---------- */
+  .programs{background:var(--blue-dark);color:var(--white);}
+  .programs .section-head p{color:var(--white);}
+  .prog-grid{
+    max-width:var(--max-w);margin:0 auto;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  }
+  .prog-card{background:var(--white);border:1px solid var(--blue-100);padding:25px;display:flex;flex-direction:column;gap:7px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05));}
+  .prog-card .num{
+    width:32px;height:32px;border-radius:8px;background:var(--blue-50);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'ABeeZee',sans-serif;font-size:12px;color:var(--blue-accent);margin-bottom:5px;
+  }
+  .prog-card h3{font-family:'ABeeZee',sans-serif;font-weight:400;font-size:16px;color:var(--blue-link);margin:0;}
+  .prog-card p{font-family:'ABeeZee',sans-serif;font-size:12px;line-height:19.5px;color:var(--slate-600);margin:0;}
+  .prog-card.span2{grid-column:span 2;}
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy{
+    position:relative;padding:80px 64px;
+    background-size:cover;background-position:center;
+    color:var(--white);
+  }
+  .philosophy::before{content:"";position:absolute;inset:0;background:rgba(15,23,42,.55);}
+  .philosophy-inner{position:relative;max-width:1152px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:48px;}
+  .philosophy .section-head h2{color:var(--blue-link);}
+  .philosophy .section-head h2 .chip{background:var(--blue-dark);color:var(--white);}
+  .belief-list{display:grid;grid-template-columns:1fr;gap:16px;width:100%;max-width:651px;}
+  .belief-item{background:var(--white);display:flex;gap:12px;align-items:flex-start;padding:16px;}
+  .belief-item .dot{color:var(--blue-400);font-size:16px;line-height:20px;}
+  .belief-item span{color:var(--blue-primary);font-size:14px;line-height:20px;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{padding:96px 32px;text-align:center;}
+  .final-cta .inner{max-width:896px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px;}
+  .final-cta h2{font-family:'ABeeZee',sans-serif;font-weight:400;font-size:44px;letter-spacing:-1.2px;margin:0;color:#000;}
+  .final-cta p{font-family:'ABeeZee',sans-serif;font-size:16px;color:#000;max-width:672px;margin:0 0 8px;}
+  .cta-box{
+    background:var(--blue-primary);color:var(--white);
+    max-width:576px;width:100%;padding:40px;
+    box-shadow:0 25px 50px -12px rgba(0,0,0,.25);
+    display:flex;flex-direction:column;align-items:center;gap:24px;
+  }
+  .cta-box h3{font-family:'ABeeZee',sans-serif;font-weight:400;font-size:18px;margin:0;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--blue-primary);color:var(--blue-100);padding:64px 32px 32px;}
+  .footer-grid{
+    max-width:var(--max-w);margin:0 auto;
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
+    border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:40px;
+  }
+  .footer-brand{display:flex;gap:16px;align-items:flex-start;}
+  .footer-brand img{width:64px;height:auto;flex-shrink:0;}
+  .footer-brand p{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;line-height:19.5px;margin:0;color:var(--blue-100);}
+  footer h4{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-200);margin:0 0 16px;}
+  footer .flinks{display:flex;flex-direction:column;gap:10px;}
+  footer .flinks a,footer .flinks span{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--blue-100);line-height:16px;}
+  footer .flinks a:hover{color:var(--white);}
+  .footer-bottom{
+    max-width:var(--max-w);margin:0 auto;padding-top:32px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+  }
+  .footer-bottom p{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--blue-200);margin:0;}
+  .footer-bottom .legal{display:flex;gap:24px;}
+  .footer-bottom .legal a{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--blue-200);}
+  .footer-bottom .legal a:hover{color:var(--white);}
+
+  /* ---------- SCROLL REVEAL (zignuts-style: snappy fade + rise + scale) ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(48px) scale(.96);
+    transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+    will-change:opacity, transform;
+  }
+  .reveal.in-view{opacity:1;transform:translateY(0) scale(1);}
+  .reveal-left{transform:translateX(-56px) scale(.97);}
+  .reveal-left.in-view{transform:translateX(0) scale(1);}
+  .reveal-right{transform:translateX(56px) scale(.97);}
+  .reveal-right.in-view{transform:translateX(0) scale(1);}
+  .reveal-scale{transform:scale(.85);}
+  .reveal-scale.in-view{transform:scale(1);}
+
+  /* once a reveal has played, swap to a quick transition so :hover states react instantly */
+  .reveal.revealed{transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, border-color .35s ease, background-color .35s ease;}
+
+  .stagger>*:nth-child(1){transition-delay:0ms}
+  .stagger>*:nth-child(2){transition-delay:90ms}
+  .stagger>*:nth-child(3){transition-delay:180ms}
+  .stagger>*:nth-child(4){transition-delay:270ms}
+  .stagger>*:nth-child(5){transition-delay:360ms}
+  .stagger>*:nth-child(6){transition-delay:450ms}
+  .stagger>*:nth-child(7){transition-delay:540ms}
+  .stagger>*:nth-child(8){transition-delay:630ms}
+  .stagger>*:nth-child(9){transition-delay:720ms}
+  .stagger>*:nth-child(10){transition-delay:810ms}
+  .stagger>*:nth-child(11){transition-delay:900ms}
+  .stagger>*:nth-child(12){transition-delay:990ms}
+  .stagger>*:nth-child(13){transition-delay:1080ms}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+  }
+
+  /* ---------- HOVER EFFECTS (all cards/tiles) ----------
+     Note: .eco-item/.mv-card/.why-card/.ex-card/.prog-card/.belief-item all carry
+     .reveal, which already supplies a transition (slow pre-reveal, fast via
+     .reveal.revealed post-reveal) — we only set the hover *values* here so we
+     don't clobber that timing by re-declaring `transition` at equal specificity. */
+  .eco-item:hover{transform:translateY(-4px);}
+  .eco-item:hover img{transform:scale(1.18) rotate(-4deg);}
+  .eco-item img{transition:transform .35s cubic-bezier(.22,1,.36,1);}
+
+  .mv-card:hover,.why-card:hover,.prog-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px -12px rgba(15,23,42,.18);
+    border-color:var(--blue-400);
+  }
+
+  .ex-card img{transition:transform .5s cubic-bezier(.22,1,.36,1);}
+  .ex-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px -12px rgba(15,23,42,.18);}
+  .ex-card:hover img{transform:scale(1.08);}
+
+  .belief-item:hover{transform:translateX(6px) translateY(0);box-shadow:0 10px 25px -8px rgba(15,23,42,.15);}
+
+  .about-visual .card{transition:transform .35s cubic-bezier(.22,1,.36,1);}
+  .about-visual .card:hover{transform:translateY(-6px) scale(1.015);}
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:1024px){
+    .about-grid{grid-template-columns:1fr;}
+    .about-visual{order:-1;}
+    .eco-grid{grid-template-columns:repeat(3,1fr);}
+    .ex-grid{grid-template-columns:repeat(2,1fr);}
+    .prog-grid{grid-template-columns:repeat(2,1fr);}
+    .prog-card.span2{grid-column:span 1;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .footer-brand{grid-column:span 2;}
+  }
+
+  @media (max-width:768px){
+    .wrap,.section-pad{padding-left:20px;padding-right:20px;}
+    .navbar{margin:12px 16px;top:12px;padding:10px 16px;border-radius:14px;}
+    .nav-links{
+      position:absolute;top:calc(100% + 8px);left:0;right:0;
+      background:var(--white);border-radius:14px;
+      flex-direction:column;align-items:flex-start;gap:0;
+      box-shadow:0 10px 25px rgba(30,58,138,0.15);
+      display:none;padding:8px;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{width:100%;padding:12px;border-radius:8px;}
+    .nav-links a:hover{background:var(--blue-50);}
+    .nav-toggle{display:block;}
+    .nav-cta{display:none;}
+
+    .hero{padding:40px 20px 48px;}
+    .hero h1{font-size:26px;line-height:32px;}
+    .hero .lede{font-size:16px;line-height:22px;}
+    .hero .body{font-size:14px;line-height:20px;text-align:justify;}
+
+    .section-head h2{font-size:22px;}
+    .why .section-head h2,.excellence .section-head h2{font-size:20px;}
+
+    .about-top{padding:48px 20px 0;}
+    .mv{padding:48px 20px;}
+    .why{padding:8px 20px 56px;}
+    .section-pad{padding:56px 20px;}
+    .final-cta{padding:56px 20px;}
+    footer{padding:48px 20px 32px;}
+
+    /* About: reflow so the visual card sits right after the heading,
+       matching the Figma mobile edit, without touching desktop DOM order */
+    .about-grid{display:flex;flex-direction:column;gap:16px;}
+    .about-copy{display:contents;}
+    .about-copy .pill{order:1;margin-bottom:0;}
+    .about-copy h2{order:2;font-size:20px;text-align:center;}
+    .about-visual{order:3;}
+    .about-copy p{text-align:justify;}
+    .about-copy p:nth-of-type(1){order:4;}
+    .about-copy p:nth-of-type(2){order:5;}
+    .about-copy p:nth-of-type(3){order:7;}
+
+    /* Icon grid: 3 columns, reordered to match the Figma mobile arrangement */
+    .eco-grid{grid-template-columns:repeat(3,1fr);order:6;}
+    .eco-grid>*:nth-child(1){order:1;}
+    .eco-grid>*:nth-child(2){order:8;}
+    .eco-grid>*:nth-child(3){order:2;}
+    .eco-grid>*:nth-child(4){order:9;}
+    .eco-grid>*:nth-child(5){order:3;}
+    .eco-grid>*:nth-child(6){order:10;}
+    .eco-grid>*:nth-child(7){order:4;}
+    .eco-grid>*:nth-child(8){order:11;}
+    .eco-grid>*:nth-child(9){order:5;}
+    .eco-grid>*:nth-child(10){order:12;}
+    .eco-grid>*:nth-child(11){order:6;}
+    .eco-grid>*:nth-child(12){order:13;}
+    .eco-grid>*:nth-child(13){order:7;}
+
+    .mv-cards{grid-template-columns:1fr;}
+    .mv-card p{text-align:justify;}
+    .why-cards{grid-template-columns:1fr;}
+    .ex-grid{grid-template-columns:1fr;}
+    .ex-card h3{font-size:19px;}
+    .prog-grid{grid-template-columns:1fr;}
+    .prog-card.span2{grid-column:span 1;}
+
+    .footer-grid{grid-template-columns:1fr;}
+    .footer-brand{grid-column:span 1;flex-direction:column;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+
+    .final-cta h2{font-size:26px;}
+    .cta-box{padding:28px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.png" alt="I⁴ Institute logo">
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="#about">About us</a>
+    <a href="#excellence">Areas of Excellence</a>
+    <a href="#programs">Programs</a>
+    <a href="#believe">What we believe</a>
+  </div>
+  <a href="#contact" class="nav-cta">Contact Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-bg" aria-hidden="true">
+    <video class="hero-bg-video" autoplay muted loop playsinline poster="assets/hero-network-poster.jpg">
+      <source src="assets/hero-network.mp4" type="video/mp4">
+    </video>
+    <div class="hero-bg-scrim" id="heroScrim"></div>
+  </div>
+  <div class="hero-inner stagger">
+    <h1 class="reveal">Powering the Future of<br><span class="hl">Intelligence</span>, Innovation &amp; Technology</h1>
+    <p class="lede reveal">Future-ready education. Experiential learning. Industry-driven innovation.</p>
+    <p class="body reveal">I⁴ (I Power 4) is a next-generation institute at the intersection of technology, education, research, industry, entrepreneurship and innovation. Develop practical capabilities in AI, Data Science, Robotics, Industry 4.0 and emerging technologies—while turning ideas into real-world impact.</p>
+    <div class="cta-row reveal">
+      <a href="#programs" class="btn btn-primary">Explore Programs</a>
+      <a href="#contact" class="btn btn-outline">Enquire Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT US -->
+<section class="about" id="about">
+  <div class="about-top">
+    <div class="about-grid">
+      <div class="about-copy reveal reveal-left">
+        <span class="pill">About us</span>
+        <h2>I⁴: INTERNATIONAL INSTITUTE OF INNOVATION &amp; INTELLIGENCE</h2>
+        <p>The International Institute of Innovation &amp; Intelligence: I⁴ (I Power 4) envisioned as a next-generation institution at the intersection of technology, education, research, industry, entrepreneurship, and innovation.</p>
+        <p>The Institute focuses on some of the most transformative domains of the 21st century, including:</p>
+
+        <div class="eco-grid stagger">
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-ai.svg" alt=""><span>Artificial Intelligence &amp; Machine Learning</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-datasci.svg" alt=""><span>Data Science &amp; Analytics</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-robotics.svg" alt=""><span>Robotics &amp; Automation</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-3dprint.svg" alt=""><span>3D Printing &amp; Additive Manufacturing</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-industry40.svg" alt=""><span>Industry 4.0</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-iot.svg" alt=""><span>IoT &amp; Intelligent Systems</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-innovation.svg" alt=""><span>Innovation &amp; Entrepreneurship</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-rnd.svg" alt=""><span>Research &amp; Development</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-execedu.svg" alt=""><span>Executive Education</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-corptraining.svg" alt=""><span>Corporate Training</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-edtech.svg" alt=""><span>Educational Technology</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-online.svg" alt=""><span>Online Learning</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-skill.svg" alt=""><span>Skill Development</span></div>
+        </div>
+
+        <p>I⁴ (I Power 4) is designed to serve students, educators, researchers, working professionals, industry personnel, managers, entrepreneurs, CEOs, government organizations, educational institutions, startups, and corporations.</p>
+      </div>
+      <div class="about-visual reveal reveal-right">
+        <div class="card">
+          <img src="assets/hero-visual.png" alt="International Institute of Innovation & Intelligence">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider-line">
+
+  <!-- MISSION & VISION -->
+  <div class="mv">
+    <div class="section-head reveal">
+      <span class="pill">purpose &amp; direction</span>
+      <h2>Our <span class="chip on-white" style="color:var(--blue-primary);background:#fff;">Mission &amp; Vission</span></h2>
+      <p>Empowering the next generation of innovators and driving national transformation through technology and intelligence.</p>
+    </div>
+    <div class="mv-cards stagger">
+      <div class="mv-card reveal">
+        <span class="badge">Our Mission</span>
+        <h3>Building Future Capabilities &amp; <span class="accent">Real-World Impact</span></h3>
+        <p>The International Institute of Innovation &amp; Intelligence aims to be globally recognized as a leading center for laboratory-based learning, skills development, and applied research. We empower innovators, entrepreneurs, and technology leaders to transform scientific breakthroughs into solutions that create lasting societal and economic impacts. By promoting rigorous inquiry, systematic experimentation, and interdisciplinary collaboration, we enhance India's leadership in the global innovation economy. We connect discoveries with real-world applications to foster an ecosystem where transformative ideas flourish, and sustainable value creation shapes the future of innovation at local, national, and global levels.</p>
+      </div>
+      <div class="mv-card vision reveal">
+        <span class="badge">Our Vision</span>
+        <h3>Preparing India to <span class="accent">Create, Lead &amp; Innovate</span></h3>
+        <p>The International Institute of Innovation &amp; Intelligence provides a hands-on learning environment that emphasizes research and entrepreneurship, enabling leaders to adapt to rapidly evolving technology. Our industry-focused courses and practical experience with new technologies equip learners with the skills they need for the future. Our advanced laboratories help transform ideas into real businesses, and our training programs support professionals and leaders in their growth. By sharing knowledge and building strong institutions, we empower entrepreneurs and technology leaders to shape future industries and promote sustainable innovation worldwide.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider-line">
+
+  <!-- WHY I4 -->
+  <div class="why">
+    <div class="section-head reveal">
+      <span class="pill">Why I⁴ ?</span>
+      <h2>Where <span class="chip on-white" style="color:var(--blue-primary);background:#fff;">Intelligence</span> Becomes Innovation</h2>
+    </div>
+    <div class="why-cards stagger">
+      <div class="why-card reveal">
+        <h3>Redefining Education</h3>
+        <p>I⁴ is designed to go beyond conventional education. We bring together learning, experimentation, research, industry collaboration and entrepreneurship to help learners and organizations build capabilities for the future.</p>
+        <div class="formula-box">
+          <span class="label">Our Formula</span>
+          <span class="formula">Intelligence → Ideas → Innovation → Impact</span>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="core-tag"><span class="dot"></span><span>Core Principle</span></div>
+        <h3>Philosophy</h3>
+        <p class="core-body">The philosophy of I⁴ is based on the idea of amplification and compounding: intelligence generates ideas, ideas drive innovation, and innovation creates impact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS OF EXCELLENCE -->
+<section class="excellence section-pad" id="excellence">
+  <div class="section-head reveal">
+    <span class="pill light">Areas of Excellence</span>
+    <h2>Build Skills in the Technologies <span class="chip">Shaping Tomorrow</span></h2>
+  </div>
+  <div class="ex-grid stagger">
+    <div class="ex-card reveal">
+      <img src="assets/excellence-1.jpg" alt="AI & Machine Learning">
+      <h3>AI &amp; Machine Learning</h3>
+      <p>Generative AI, Deep Learning, NLP, Computer Vision, Responsible AI &amp; AI-enabled products.</p>
+      <hr>
+    </div>
+    <div class="ex-card reveal">
+      <img src="assets/excellence-2.jpg" alt="Data Science & Analytics">
+      <h3>Data Science &amp; Analytics</h3>
+      <p>Predictive analytics, BI, visualization, big data &amp; decision intelligence.</p>
+      <hr>
+    </div>
+    <div class="ex-card reveal">
+      <img src="assets/excellence-3.jpg" alt="Robotics & Automation">
+      <h3>Robotics &amp; Automation</h3>
+      <p>Industrial &amp; collaborative robots, RPA, mechatronics &amp; autonomous navigation.</p>
+      <hr>
+    </div>
+    <div class="ex-card reveal">
+      <img src="assets/excellence-4.jpg" alt="3D Printing & Manufacturing">
+      <h3>3D Printing &amp; Mfg</h3>
+      <p>Rapid prototyping, digital fabrication &amp; design for additive manufacturing.</p>
+      <hr>
+    </div>
+    <div class="ex-card reveal">
+      <img src="assets/excellence-5.jpg" alt="Industry 4.0">
+      <h3>Industry 4.0</h3>
+      <p>IoT, digital twins, smart manufacturing &amp; predictive maintenance.</p>
+      <hr>
+    </div>
+    <div class="ex-card reveal">
+      <img src="assets/excellence-6.jpg" alt="Innovation & Entrepreneurship">
+      <h3>Innovation &amp; Entrepreneurship</h3>
+      <p>Design thinking, startup bootcamps, mentoring &amp; investor readiness.</p>
+      <hr>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORE PROGRAMS -->
+<section class="programs section-pad" id="programs">
+  <div class="section-head reveal">
+    <span class="pill">explore our programs</span>
+    <h2>Learn. Build. <span class="chip">Innovate.</span></h2>
+    <p>Choose a learning pathway designed around your career, organization or innovation goals.</p>
+  </div>
+  <div class="prog-grid stagger">
+    <div class="prog-card reveal">
+      <span class="num">01</span>
+      <h3>Certificate Programs</h3>
+      <p>Short, specialized programs focused on emerging technologies and professional skills.</p>
+    </div>
+    <div class="prog-card reveal">
+      <span class="num">02</span>
+      <h3>Advanced Certificate Programs</h3>
+      <p>Industry-oriented learning combining technical knowledge, practical training and projects.</p>
+    </div>
+    <div class="prog-card reveal">
+      <span class="num">03</span>
+      <h3>Diploma Programs</h3>
+      <p>Deeper specialization for developing advanced technical and professional competence.</p>
+    </div>
+    <div class="prog-card reveal">
+      <span class="num">04</span>
+      <h3>Executive Education</h3>
+      <p>Programs designed for CEOs, CXOs, senior executives and managers.</p>
+    </div>
+    <div class="prog-card reveal">
+      <span class="num">05</span>
+      <h3>Professional Development</h3>
+      <p>Upskilling and reskilling programs for working professionals.</p>
+    </div>
+    <div class="prog-card reveal">
+      <span class="num">06</span>
+      <h3>Workshops &amp; Bootcamps</h3>
+      <p>Intensive, hands-on experiences focused on technology, innovation and entrepreneurship.</p>
+    </div>
+    <div class="prog-card span2 reveal">
+      <span class="num">07</span>
+      <h3>Collaborative Certifications</h3>
+      <p>Programs delivered in collaboration with universities, industries, technology organizations and international partners.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY / WHAT WE BELIEVE -->
+<section class="philosophy" id="believe" style="background-image:url('assets/philosophy-bg.jpg');">
+  <div class="philosophy-inner">
+    <div class="section-head reveal">
+      <span class="pill light">The I⁴ Philosophy</span>
+      <h2>What We <span class="chip">Believe</span></h2>
+    </div>
+    <div class="belief-list stagger">
+      <div class="belief-item reveal"><span class="dot">•</span><span>Technology should serve humanity.</span></div>
+      <div class="belief-item reveal"><span class="dot">•</span><span>Research should move beyond publications toward meaningful impact.</span></div>
+      <div class="belief-item reveal"><span class="dot">•</span><span>Industry and academia should build the future together.</span></div>
+      <div class="belief-item reveal"><span class="dot">•</span><span>Entrepreneurship can transform ideas into economic and social value.</span></div>
+      <div class="belief-item reveal"><span class="dot">•</span><span>India's knowledge heritage and modern technology can together shape a better future.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="contact">
+  <div class="inner stagger">
+    <h2 class="reveal">Your Future Starts with Capability.</h2>
+    <p class="reveal">Whether you are a student, professional, entrepreneur, executive, educator, institution or organization, I⁴ provides pathways to learn, experiment, innovate and create impact.</p>
+    <div class="cta-box reveal reveal-scale">
+      <h3>Ready to Build What Comes Next?</h3>
+      <a href="mailto:connect@i4.institute" class="btn btn-outline-white">Contact us</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid stagger">
+    <div class="footer-brand reveal">
+      <img src="assets/hero-visual.png" alt="I⁴ Institute logo">
+      <p>International Institute of Innovation &amp; Intelligence. Championing sovereign deep-tech, indigenous silicon fabrication, and epistemological AI across an interconnected world.</p>
+    </div>
+    <div class="reveal">
+      <h4>Quick Links</h4>
+      <div class="flinks">
+        <a href="#about">About us</a>
+        <a href="#excellence">Areas of Excellence</a>
+        <a href="#programs">Programs</a>
+        <a href="#believe">What we believe</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <h4>Contact us</h4>
+      <div class="flinks">
+        <span>+919537466959 &mdash; Nilesh Parikh<br>+919879547053 &mdash; Parthil Gondlaia<br>+919898990791 &mdash; Manish Raval</span>
+        <a href="mailto:connect@i4.institute">connect@i4.institute</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <h4>Reach us</h4>
+      <div class="flinks">
+        <span>Ahmedabad, Gujarat, India</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 International Institute of Innovation &amp; Intelligence (I⁴). All rights reserved.</p>
+    <div class="legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Research</a>
+      <a href="#">IP Sovereignty Charter</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // hero background: reveal the network graphic at full clarity in a radius around the cursor
+  const heroSection = document.getElementById('heroSection');
+  const heroScrim = document.getElementById('heroScrim');
+  if (heroSection && heroScrim && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let pending = false, lastX = 0, lastY = 0;
+    const applyPos = () => {
+      pending = false;
+      heroScrim.style.setProperty('--mx', lastX + '%');
+      heroScrim.style.setProperty('--my', lastY + '%');
+    };
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      lastX = ((e.clientX - rect.left) / rect.width) * 100;
+      lastY = ((e.clientY - rect.top) / rect.height) * 100;
+      if (!pending) { pending = true; requestAnimationFrame(applyPos); }
+    });
+    heroSection.addEventListener('mouseleave', () => {
+      lastX = 50; lastY = 30;
+      if (!pending) { pending = true; requestAnimationFrame(applyPos); }
+    });
+  }
+
+  const revealEls = document.querySelectorAll('.reveal');
+  function markRevealed(el) {
+    // switch to the fast transition (.reveal.revealed) once the slow reveal
+    // animation has finished, so hover states feel instant afterwards
+    let done = false;
+    const finish = () => { if (!done) { done = true; el.classList.add('revealed'); } };
+    el.addEventListener('transitionend', finish, { once: true });
+    setTimeout(finish, 950);
+  }
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          markRevealed(entry.target);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    revealEls.forEach(el => { el.classList.add('in-view', 'revealed'); });
+  }
+</script>
+
+</body>
+</html>
