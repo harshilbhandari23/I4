@@ -369,7 +369,7 @@
     .hero{padding:40px 20px 48px;}
     .hero h1{font-size:26px;line-height:44px;}
     .hero .lede{font-size:16px;line-height:22px;}
-    .hero .body{font-size:14px;line-height:20px;text-align:justify;}
+    .hero .body{font-size:14px;line-height:20px;text-align:center;}
 
     .section-head h2{font-size:22px;}
     .why .section-head h2,.excellence .section-head h2{font-size:20px;}
@@ -388,7 +388,7 @@
     .about-copy .pill{order:1;margin-bottom:0;}
     .about-copy h2{order:2;font-size:20px;text-align:center;}
     .about-visual{order:3;}
-    .about-copy p{text-align:justify;}
+    .about-copy p{text-align:center;}
     .about-copy p:nth-of-type(1){order:4;}
     .about-copy p:nth-of-type(2){order:5;}
     .about-copy p:nth-of-type(3){order:7;}
@@ -410,16 +410,37 @@
     .eco-grid>*:nth-child(13){order:7;}
 
     .mv-cards{grid-template-columns:1fr;}
-    .mv-card p{text-align:justify;}
+    .mv-card{text-align:center;}
+    .mv-card .badge{align-self:center;}
+    .mv-card h3{text-align:center;}
+    .mv-card p{text-align:center;}
+
     .why-cards{grid-template-columns:1fr;}
+    .why-card{text-align:center;}
+    .why-card h3{text-align:center;}
+    .why-card p{text-align:center;}
+    .why-card .core-tag{justify-content:center;}
+
     .ex-grid{grid-template-columns:1fr;}
-    .ex-card h3{font-size:19px;}
+    .ex-card{text-align:center;}
+    .ex-card h3{font-size:19px;text-align:center;}
+    .ex-card p{text-align:center;}
+
     .prog-grid{grid-template-columns:1fr;}
+    .prog-card{text-align:center;}
+    .prog-card .num{align-self:center;}
+    .prog-card h3{text-align:center;}
+    .prog-card p{text-align:center;}
     .prog-card.span2{grid-column:span 1;}
 
+    .belief-item{justify-content:center;}
+    .belief-item span{text-align:center;}
+
     .footer-grid{grid-template-columns:1fr;}
-    .footer-brand{grid-column:span 1;flex-direction:column;}
-    .footer-bottom{flex-direction:column;align-items:flex-start;}
+    .footer-grid>div{text-align:center;}
+    .footer-brand{grid-column:span 1;align-items:center;justify-content:center;text-align:center;}
+    .footer-bottom{flex-direction:column;align-items:center;text-align:center;}
+    .footer-bottom .legal{justify-content:center;}
 
     .final-cta h2{font-size:26px;}
     .cta-box{padding:28px;}
