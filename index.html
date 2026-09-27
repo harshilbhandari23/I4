@@ -115,7 +115,10 @@
   }
   .hero-inner{position:relative;z-index:1;max-width:1024px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px;}
   @media (max-width:768px){
-    .hero-bg{display:none;}
+    /* no cursor on touch devices, so skip the spotlight reveal — just show
+       the network graphic faintly across the whole hero */
+    .hero-bg-scrim{display:none;}
+    .hero-bg-video{opacity:.14;}
   }
   @media (prefers-reduced-motion: reduce){
     .hero-bg-video{display:none;}
