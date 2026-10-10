@@ -273,6 +273,8 @@
   footer .flinks{display:flex;flex-direction:column;gap:10px;}
   footer .flinks a,footer .flinks span{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--blue-100);line-height:16px;}
   footer .flinks a:hover{color:var(--white);}
+  footer .flinks .has-icon{display:flex;align-items:center;gap:10px;}
+  footer .flinks .has-icon svg{width:16px;height:16px;flex:none;fill:none;stroke:#fff;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
   .footer-bottom{
     max-width:var(--max-w);margin:0 auto;padding-top:32px;
     display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
@@ -712,8 +714,8 @@
     <div class="reveal">
       <h4>Contact us</h4>
       <div class="flinks">
-        <span>+919537466959</span>
-        <a href="mailto:connect@i4.institute">connect@i4.institute</a>
+        <span class="has-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+919537466959</span>
+        <a class="has-icon" href="mailto:connect@i4.institute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>connect@i4.institute</a>
       </div>
     </div>
     <div class="reveal">
