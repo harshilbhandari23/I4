@@ -103,26 +103,7 @@
     overflow:hidden;
     box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);
   }
-  /* background network graphic: faint everywhere, revealed at full clarity in a radius around the cursor */
-  .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;}
-  .hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-  .hero-bg-scrim{
-    position:absolute;inset:0;
-    background:var(--white);
-    -webkit-mask-image:radial-gradient(circle at var(--mx,50%) var(--my,30%), transparent 0px, transparent 90px, rgba(255,255,255,.86) 320px);
-    mask-image:radial-gradient(circle at var(--mx,50%) var(--my,30%), transparent 0px, transparent 90px, rgba(255,255,255,.86) 320px);
-    transition:-webkit-mask-image .4s ease, mask-image .4s ease;
-  }
   .hero-inner{position:relative;z-index:1;max-width:1024px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px;}
-  @media (max-width:768px){
-    /* no cursor on touch devices, so skip the spotlight reveal — just show
-       the network graphic faintly across the whole hero */
-    .hero-bg-scrim{display:none;}
-    .hero-bg-video{opacity:.14;}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .hero-bg-video{display:none;}
-  }
   .hero h1{
     font-weight:700;font-size:48px;line-height:72px;letter-spacing:-1.3px;
     color:var(--blue-primary);margin:0;
@@ -131,6 +112,7 @@
   .hero .lede{font-family:'Outfit',sans-serif;font-weight:600;font-size:20px;color:var(--blue-primary);max-width:768px;margin:0;}
   .hero .body{font-size:14px;color:var(--blue-primary);max-width:768px;line-height:24px;margin:0;}
   .hero .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding-top:24px;}
+  .hero .cta-row .btn{width:180px;}
 
   /* ---------- SECTION shared ---------- */
   section{width:100%;}
@@ -142,6 +124,12 @@
   /* ---------- ABOUT ---------- */
   .about{background:var(--blue-primary);color:var(--white);}
   .about-top{padding:64px 32px 0;}
+  [data-particle-net]{position:relative;}
+  .particle-net{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.35;transition:opacity .6s ease;}
+  @media (hover:hover){
+    [data-particle-net]:hover > .particle-net{opacity:1;}
+  }
+  [data-particle-net] > :not(.particle-net){position:relative;z-index:1;}
   .about-grid{
     max-width:var(--max-w);margin:0 auto;
     display:grid;grid-template-columns:1.7fr 1fr;gap:48px;align-items:center;
@@ -240,6 +228,7 @@
   .philosophy-inner{position:relative;max-width:1152px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:24px;}
   .philosophy .section-head{margin-bottom:0;}
   .philosophy .section-head h2{color:var(--white);}
+  .philosophy .pill{color:var(--white);}
   .philosophy .section-head h2 .chip{background:var(--white);color:var(--blue-dark);}
   .belief-list{display:grid;grid-template-columns:1fr;gap:16px;width:100%;max-width:651px;}
   .belief-item{background:var(--white);display:flex;gap:12px;align-items:flex-start;padding:16px;}
@@ -472,13 +461,7 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="heroSection">
-  <div class="hero-bg" aria-hidden="true">
-    <video class="hero-bg-video" autoplay muted loop playsinline poster="assets/hero-network-poster.jpg">
-      <source src="assets/hero-network.mp4" type="video/mp4">
-    </video>
-    <div class="hero-bg-scrim" id="heroScrim"></div>
-  </div>
+<section class="hero" id="heroSection" data-particle-net data-particle-color="51,89,211" data-particle-line-color="100,116,139">
   <div class="hero-inner stagger">
     <h1 class="reveal">Powering the Future of<br><span class="hl">Intelligence</span>, Innovation &amp; Technology</h1>
     <p class="lede reveal">Future-ready education. Experiential learning. Industry-driven innovation.</p>
@@ -670,7 +653,7 @@
 <section class="philosophy" id="believe" style="background-image:url('assets/philosophy-bg.jpg');">
   <div class="philosophy-inner">
     <div class="section-head reveal">
-      <span class="pill light">The I⁴ Philosophy</span>
+      <span class="pill">The I⁴ Philosophy</span>
       <h2>What We <span class="chip">Believe</span></h2>
     </div>
     <div class="belief-list stagger">
@@ -739,28 +722,6 @@
   navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-  // hero background: reveal the network graphic at full clarity in a radius around the cursor
-  const heroSection = document.getElementById('heroSection');
-  const heroScrim = document.getElementById('heroScrim');
-  if (heroSection && heroScrim && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    let pending = false, lastX = 0, lastY = 0;
-    const applyPos = () => {
-      pending = false;
-      heroScrim.style.setProperty('--mx', lastX + '%');
-      heroScrim.style.setProperty('--my', lastY + '%');
-    };
-    heroSection.addEventListener('mousemove', (e) => {
-      const rect = heroSection.getBoundingClientRect();
-      lastX = ((e.clientX - rect.left) / rect.width) * 100;
-      lastY = ((e.clientY - rect.top) / rect.height) * 100;
-      if (!pending) { pending = true; requestAnimationFrame(applyPos); }
-    });
-    heroSection.addEventListener('mouseleave', () => {
-      lastX = 50; lastY = 30;
-      if (!pending) { pending = true; requestAnimationFrame(applyPos); }
-    });
-  }
-
   const revealEls = document.querySelectorAll('.reveal');
   function markRevealed(el) {
     // switch to the fast transition (.reveal.revealed) once the slow reveal
@@ -785,6 +746,7 @@
     revealEls.forEach(el => { el.classList.add('in-view', 'revealed'); });
   }
 </script>
+<script src="assets/particle-net.js"></script>
 
 </body>
 </html>
