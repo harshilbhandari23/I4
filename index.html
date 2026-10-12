@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>International Institute of Innovation &amp; Intelligence</title>
 <link rel="icon" type="image/png" href="assets/favicon.png?v=2">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/outfit-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
 <style>
   :root{
     --blue-primary:#3359d3;
@@ -724,36 +725,7 @@
   </div>
 </footer>
 
-<script>
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-
-  const revealEls = document.querySelectorAll('.reveal');
-  function markRevealed(el) {
-    // switch to the fast transition (.reveal.revealed) once the slow reveal
-    // animation has finished, so hover states feel instant afterwards
-    let done = false;
-    const finish = () => { if (!done) { done = true; el.classList.add('revealed'); } };
-    el.addEventListener('transitionend', finish, { once: true });
-    setTimeout(finish, 950);
-  }
-  if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          markRevealed(entry.target);
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-    revealEls.forEach(el => revealObserver.observe(el));
-  } else {
-    revealEls.forEach(el => { el.classList.add('in-view', 'revealed'); });
-  }
-</script>
+<script src="assets/site.js"></script>
 <script src="assets/particle-net.js"></script>
 
 </body>

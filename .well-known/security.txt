@@ -1,0 +1,4 @@
+Contact: mailto:connect@i4.institute
+Expires: 2027-10-12T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://i4.institute/.well-known/security.txt
