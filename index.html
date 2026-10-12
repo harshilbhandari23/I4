@@ -99,9 +99,14 @@
   .nav-toggle span{display:block;width:24px;height:2px;background:var(--slate-700);margin:5px 0;transition:.2s;}
 
   /* ---------- HERO ---------- */
+  /* The hero is pulled up behind the sticky navbar (--nav-space = navbar height + its
+     vertical margins) so the particle background reaches the top of the page; the
+     same amount is added back to the top padding so the text does not move. */
+  :root{--nav-space:102px;}
   .hero{
     position:relative;
-    padding:88px 32px 96px;
+    margin-top:calc(-1 * var(--nav-space));
+    padding:calc(88px + var(--nav-space)) 32px 96px;
     text-align:center;
     overflow:hidden;
     box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);
@@ -364,7 +369,8 @@
     .nav-toggle{display:block;}
     .nav-cta{display:none;}
 
-    .hero{padding:40px 20px 48px;}
+    :root{--nav-space:90px;}
+    .hero{padding:calc(40px + var(--nav-space)) 20px 48px;}
     .hero h1{font-size:26px;line-height:44px;}
     .hero .lede{font-size:16px;line-height:22px;}
     .hero .body{font-size:14px;line-height:20px;text-align:justify;}
