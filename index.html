@@ -335,8 +335,34 @@
      .reveal.revealed post-reveal) — we only set the hover *values* here so we
      don't clobber that timing by re-declaring `transition` at equal specificity. */
   .eco-item:hover{transform:translateY(-4px);}
-  .eco-item:hover img{transform:scale(1.18) rotate(-4deg);}
-  .eco-item img{transition:transform .35s cubic-bezier(.22,1,.36,1);}
+  .eco-item:hover img{transform:scale(1.18) rotate(-4deg);filter:brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,.55));opacity:1;}
+  .eco-item:hover span{opacity:1;}
+  .eco-item img{transition:transform .35s cubic-bezier(.22,1,.36,1), filter .35s ease, opacity .35s ease;}
+  .eco-item span{transition:opacity .35s ease;}
+
+  /* Icon-grid entrance: the tiles themselves stay put; each icon pops in with a little
+     overshoot and its label follows, rippling diagonally across the grid. --eco-d is
+     set per tile from its on-screen row/column (see layoutEcoWave in site.js), so the
+     wave also runs in the right order on phones, where the visual order differs from
+     the HTML order. */
+  .eco-item.reveal:not(.in-view){opacity:1;transform:none;}
+  .eco-item:not(.in-view) img{opacity:0;transform:scale(.35) rotate(-14deg);}
+  .eco-item:not(.in-view) span{opacity:0;transform:translateY(10px);}
+  .eco-item.in-view img{animation:ecoPop .75s cubic-bezier(.34,1.56,.64,1) var(--eco-d,0ms) backwards;}
+  .eco-item.in-view span{animation:ecoLabel .55s cubic-bezier(.22,1,.36,1) calc(var(--eco-d,0ms) + 200ms) backwards;}
+  .eco-item.revealed{transition-delay:0ms;}  /* hover reacts instantly once the entrance is over */
+  @keyframes ecoPop{
+    0%{opacity:0;transform:scale(.35) rotate(-14deg);}
+    60%{opacity:.95;transform:scale(1.12) rotate(3deg);}
+    100%{opacity:.95;transform:scale(1) rotate(0);}
+  }
+  @keyframes ecoLabel{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:.9;transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .eco-item img,.eco-item span{animation:none !important;opacity:.95 !important;transform:none !important;}
+  }
 
   .mv-card:hover,.why-card:hover,.prog-card:hover{
     transform:translateY(-8px);
@@ -558,7 +584,7 @@
           <div class="eco-item reveal reveal-scale"><img src="assets/icon-fintech.svg" alt=""><span>Fintech</span></div>
         </div>
 
-        <p>I⁴ (I Power 4) is designed to serve students, educators, researchers, working professionals, industry personnel, managers, entrepreneurs, CEOs, government organizations, educational institutions, startups, and corporations.</p>
+        <p>I⁴ (I Power 4) is designed to serve students, educators, researchers, working professionals, industry personnel, managers, entrepreneurs, C-suite executives, government organizations, educational institutions, startups, and corporations.</p>
       </div>
       <div class="about-visual reveal reveal-scale">
         <div class="card">
@@ -694,7 +720,7 @@
     <div class="prog-card reveal">
       <span class="num">04</span>
       <h3>Executive Education</h3>
-      <p>Programs designed for CEOs, CXOs, senior executives and managers.</p>
+      <p>Programs designed for C-suite executives, senior leaderships and managers.</p>
     </div>
     <div class="prog-card reveal">
       <span class="num">05</span>

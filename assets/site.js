@@ -12,10 +12,28 @@ navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => na
 
 // Scroll-reveal animations. Started after the loading screen has gone so the
 // first-view entrance is visible instead of finishing behind the overlay.
+// Delay for each icon-grid tile = its diagonal position on screen (row + column), so the
+// entrance ripples across the grid in the order people actually see it.
+function layoutEcoWave() {
+  const items = [...document.querySelectorAll('.eco-grid .eco-item')];
+  if (!items.length) return;
+  const uniq = arr => [...new Set(arr)].sort((a, b) => a - b);
+  const tops = uniq(items.map(el => Math.round(el.offsetTop / 8)));
+  const lefts = uniq(items.map(el => Math.round(el.offsetLeft / 8)));
+  items.forEach(el => {
+    const row = tops.indexOf(Math.round(el.offsetTop / 8));
+    const col = lefts.indexOf(Math.round(el.offsetLeft / 8));
+    el.style.setProperty('--eco-d', ((row + col) * 85) + 'ms');
+  });
+}
+
 let revealStarted = false;
 function initReveal() {
   if (revealStarted) return;
   revealStarted = true;
+  layoutEcoWave();
+  let ecoResizeTimer;
+  window.addEventListener('resize', () => { clearTimeout(ecoResizeTimer); ecoResizeTimer = setTimeout(layoutEcoWave, 150); });
   const revealEls = document.querySelectorAll('.reveal');
   function markRevealed(el) {
     // switch to the fast transition (.reveal.revealed) once the slow reveal
