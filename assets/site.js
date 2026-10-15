@@ -41,7 +41,7 @@ function initReveal() {
   }
 }
 
-// Loading screen: play the logo animation once per session, then fade out.
+// Loading screen: play the logo animation on every page load, then fade out.
 const preloader = document.getElementById('preloader');
 const root = document.documentElement;
 if (preloader && root.classList.contains('preload')) {
@@ -59,7 +59,6 @@ if (preloader && root.classList.contains('preload')) {
   const animationDone = imageReady.then(() => new Promise(res => setTimeout(res, reduceMotion ? 600 : ANIMATION_MS)));
   const safetyCap = new Promise(res => setTimeout(res, 9000));
   Promise.race([Promise.all([pageReady, animationDone]), safetyCap]).then(() => {
-    try { sessionStorage.setItem('i4-intro', '1'); } catch (e) {}
     preloader.classList.add('hide');
     root.classList.remove('preload');
     initReveal();
