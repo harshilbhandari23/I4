@@ -479,8 +479,9 @@
 @keyframes ldGy{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes ldRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes ldFade{from{opacity:0}to{opacity:1}}
-/* Reduce Motion: no drawing or sliding, just a soft fade-in of the finished logo. */
-@media (prefers-reduced-motion:reduce){#ld *{animation:none!important;stroke-dashoffset:0!important}#ld{animation:ldFade 1.2s ease both}}
+/* Reduce Motion: the lines still draw and the bars still grow (small, calm shapes), but the
+   wordmark fades in instead of sliding up. */
+@media (prefers-reduced-motion:reduce){#ld .ld-wd{animation-name:ldFade}}
 </style>
 <g>
 <rect class="ld-bx" x="58.25" y="42.25" width="284.5" height="209.5" style="stroke-dasharray:988.0;stroke-dashoffset:988.0;animation-delay:0s"/>
