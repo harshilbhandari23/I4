@@ -45,18 +45,19 @@ function initReveal() {
 const preloader = document.getElementById('preloader');
 const root = document.documentElement;
 if (preloader && root.classList.contains('preload')) {
-  const img = preloader.querySelector('img');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const ANIMATION_MS = 4500; // the logo animation runs ~4.3s
-  const imageReady = new Promise(res => {
-    if (img.complete) res();
-    else { img.addEventListener('load', res, { once: true }); img.addEventListener('error', res, { once: true }); }
-  });
+  const wait = ms => new Promise(res => setTimeout(res, ms));
+  // The logo is inline SVG, so its CSS animations belong to this page and restart on
+  // every load. Wait for them to actually finish (plus a short hold on the finished logo);
+  // fall back to a fixed time if the browser can't report them.
+  const running = preloader.getAnimations ? preloader.getAnimations({ subtree: true }) : [];
+  const animationDone = running.length
+    ? Promise.all(running.map(a => a.finished.catch(() => {}))).then(() => wait(reduceMotion ? 600 : 500))
+    : wait(reduceMotion ? 1800 : 4500);
   const pageReady = new Promise(res => {
     if (document.readyState === 'complete') res();
     else window.addEventListener('load', res, { once: true });
   });
-  const animationDone = imageReady.then(() => new Promise(res => setTimeout(res, reduceMotion ? 600 : ANIMATION_MS)));
   const safetyCap = new Promise(res => setTimeout(res, 9000));
   Promise.race([Promise.all([pageReady, animationDone]), safetyCap]).then(() => {
     preloader.classList.add('hide');
