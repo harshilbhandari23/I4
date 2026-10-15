@@ -10,26 +10,62 @@ const navLinks = document.getElementById('navLinks');
 navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
 navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-const revealEls = document.querySelectorAll('.reveal');
-function markRevealed(el) {
-  // switch to the fast transition (.reveal.revealed) once the slow reveal
-  // animation has finished, so hover states feel instant afterwards
-  let done = false;
-  const finish = () => { if (!done) { done = true; el.classList.add('revealed'); } };
-  el.addEventListener('transitionend', finish, { once: true });
-  setTimeout(finish, 950);
+// Scroll-reveal animations. Started after the loading screen has gone so the
+// first-view entrance is visible instead of finishing behind the overlay.
+let revealStarted = false;
+function initReveal() {
+  if (revealStarted) return;
+  revealStarted = true;
+  const revealEls = document.querySelectorAll('.reveal');
+  function markRevealed(el) {
+    // switch to the fast transition (.reveal.revealed) once the slow reveal
+    // animation has finished, so hover states feel instant afterwards
+    let done = false;
+    const finish = () => { if (!done) { done = true; el.classList.add('revealed'); } };
+    el.addEventListener('transitionend', finish, { once: true });
+    setTimeout(finish, 950);
+  }
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          markRevealed(entry.target);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    revealEls.forEach(el => { el.classList.add('in-view', 'revealed'); });
+  }
 }
-if ('IntersectionObserver' in window) {
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        markRevealed(entry.target);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-  revealEls.forEach(el => revealObserver.observe(el));
+
+// Loading screen: play the logo animation once per session, then fade out.
+const preloader = document.getElementById('preloader');
+const root = document.documentElement;
+if (preloader && root.classList.contains('preload')) {
+  const img = preloader.querySelector('img');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ANIMATION_MS = 4500; // the logo animation runs ~4.3s
+  const imageReady = new Promise(res => {
+    if (img.complete) res();
+    else { img.addEventListener('load', res, { once: true }); img.addEventListener('error', res, { once: true }); }
+  });
+  const pageReady = new Promise(res => {
+    if (document.readyState === 'complete') res();
+    else window.addEventListener('load', res, { once: true });
+  });
+  const animationDone = imageReady.then(() => new Promise(res => setTimeout(res, reduceMotion ? 600 : ANIMATION_MS)));
+  const safetyCap = new Promise(res => setTimeout(res, 9000));
+  Promise.race([Promise.all([pageReady, animationDone]), safetyCap]).then(() => {
+    try { sessionStorage.setItem('i4-intro', '1'); } catch (e) {}
+    preloader.classList.add('hide');
+    root.classList.remove('preload');
+    initReveal();
+    setTimeout(() => preloader.remove(), 800);
+  });
 } else {
-  revealEls.forEach(el => { el.classList.add('in-view', 'revealed'); });
+  if (preloader) preloader.remove();
+  initReveal();
 }
