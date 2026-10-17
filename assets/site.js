@@ -86,3 +86,82 @@ if (preloader && root.classList.contains('preload')) {
   if (preloader) preloader.remove();
   initReveal();
 }
+
+// Programs carousel: drifts right-to-left on its own, and can be dragged (mouse, touch or
+// pen) in either direction. Releasing a drag keeps a little momentum, then the drift resumes.
+// The CSS animation is the no-JS fallback; with Reduce Motion the row is a plain scrollable strip.
+(function () {
+  const car = document.querySelector('.prog-carousel');
+  if (!car) return;
+  const track = car.querySelector('.prog-track');
+  if (!track || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const SPEED = 0.032;                 // drift, in px per ms (about 32px/s)
+  const MAX_FLICK = 1.8;               // cap on release momentum, px per ms
+  let x = new DOMMatrix(getComputedStyle(track).transform).m41;
+  track.style.animation = 'none';      // from here on, JS moves the track
+  let setW = 0, vx = 0, last = 0, raf = 0, visible = false;
+  let dragging = false, hovered = false, startX = 0, startPos = 0, lastX = 0, lastT = 0;
+
+  const measure = () => { setW = track.scrollWidth / 2; };
+  const wrap = () => {
+    if (!setW) return;
+    while (x <= -setW) x += setW;
+    while (x > 0) x -= setW;
+  };
+  const paint = () => { track.style.transform = 'translate3d(' + x + 'px,0,0)'; };
+
+  function frame(t) {
+    raf = 0;
+    if (!visible) return;
+    const dt = Math.min(t - last, 50);
+    last = t;
+    if (!dragging) {
+      if (Math.abs(vx) > 0.02) {                 // momentum after a flick
+        x += vx * dt;
+        vx *= Math.exp(-dt / 320);
+      } else if (!hovered) {
+        vx = 0;
+        x -= SPEED * dt;                          // idle drift, right to left
+      }
+    }
+    wrap();
+    paint();
+    raf = requestAnimationFrame(frame);
+  }
+  function start() { if (!raf && visible) { last = performance.now(); raf = requestAnimationFrame(frame); } }
+
+  car.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragging = true; vx = 0;
+    startX = lastX = e.clientX; startPos = x; lastT = e.timeStamp;
+    car.setPointerCapture(e.pointerId);
+    car.classList.add('dragging');
+  });
+  car.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    x = startPos + (e.clientX - startX);
+    const dt = e.timeStamp - lastT;
+    if (dt > 0) vx = Math.max(-MAX_FLICK, Math.min(MAX_FLICK, 0.8 * vx + 0.2 * ((e.clientX - lastX) / dt)));
+    lastX = e.clientX; lastT = e.timeStamp;
+    wrap(); paint();
+  });
+  const end = e => {
+    if (!dragging) return;
+    dragging = false;
+    car.classList.remove('dragging');
+    if (e.timeStamp - lastT > 80) vx = 0;        // held still before letting go: no flick
+    start();
+  };
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(n => car.addEventListener(n, end));
+
+  car.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hovered = true; });
+  car.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hovered = false; });
+
+  window.addEventListener('resize', () => { measure(); wrap(); paint(); });
+  new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    if (visible) { measure(); start(); }
+  }).observe(car);
+  measure(); paint();
+})();

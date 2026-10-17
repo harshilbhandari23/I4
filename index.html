@@ -232,6 +232,8 @@
     mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
   }
   .prog-track{display:flex;width:max-content;animation:progScroll 60s linear infinite;will-change:transform;}
+  .prog-carousel{cursor:grab;touch-action:pan-y;-webkit-user-select:none;user-select:none;}
+  .prog-carousel.dragging{cursor:grabbing;}
   .prog-carousel:hover .prog-track,.prog-carousel:focus-within .prog-track{animation-play-state:paused;}
   @keyframes progScroll{to{transform:translateX(-50%);}}
   .prog-card{
@@ -239,11 +241,6 @@
     background:var(--white);border:1px solid var(--blue-100);padding:25px;display:flex;flex-direction:column;gap:7px;
     filter:drop-shadow(0 1px 1px rgba(0,0,0,.05));
     transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, border-color .35s ease;
-  }
-  .prog-card .num{
-    width:32px;height:32px;border-radius:8px;background:var(--blue-50);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'ABeeZee',sans-serif;font-size:12px;color:var(--blue-accent);margin-bottom:5px;
   }
   .prog-card h3{font-family:'ABeeZee',sans-serif;font-weight:400;font-size:16px;color:var(--blue-link);margin:0;}
   .prog-card p{font-family:'ABeeZee',sans-serif;font-size:14px;line-height:19.5px;color:var(--slate-600);margin:0;}
@@ -507,7 +504,6 @@
     .whyi-card{padding:20px 18px;text-align:left;}
     .whyi-card:last-child{grid-column:auto;}
     .whyi-card h3{font-size:17px;}
-    .prog-card .num{align-self:flex-start;}
     .prog-card h3{text-align:left;}
     .prog-card p{text-align:left;}
     .belief-item{justify-content:flex-start;padding:24px;}
@@ -771,72 +767,58 @@
   <div class="prog-carousel reveal" role="region" aria-label="Our programs">
     <div class="prog-track">
       <div class="prog-card">
-        <span class="num">01</span>
         <h3>Certificate Programs</h3>
         <p>Short, specialized programs focused on emerging technologies and professional skills.</p>
       </div>
       <div class="prog-card">
-        <span class="num">02</span>
         <h3>Advanced Certificate Programs</h3>
         <p>Industry-oriented learning combining technical knowledge, practical training and projects.</p>
       </div>
       <div class="prog-card">
-        <span class="num">03</span>
         <h3>Diploma Programs</h3>
         <p>Deeper specialization for developing advanced technical and professional competence.</p>
       </div>
       <div class="prog-card">
-        <span class="num">04</span>
         <h3>Executive Education</h3>
         <p>Programs designed for C-suite executives, senior leaderships and managers.</p>
       </div>
       <div class="prog-card">
-        <span class="num">05</span>
         <h3>Professional Development</h3>
         <p>Upskilling and reskilling programs for working professionals.</p>
       </div>
       <div class="prog-card">
-        <span class="num">06</span>
         <h3>Workshops &amp; Bootcamps</h3>
         <p>Intensive, hands-on experiences focused on technology, innovation and entrepreneurship.</p>
       </div>
       <div class="prog-card">
-        <span class="num">07</span>
         <h3>Collaborative Certifications</h3>
         <p>Programs delivered in collaboration with universities, industries, technology organizations and international partners.</p>
       </div>
       <div class="prog-card" aria-hidden="true">
-        <span class="num">01</span>
         <h3>Certificate Programs</h3>
         <p>Short, specialized programs focused on emerging technologies and professional skills.</p>
       </div>
       <div class="prog-card" aria-hidden="true">
-        <span class="num">02</span>
         <h3>Advanced Certificate Programs</h3>
         <p>Industry-oriented learning combining technical knowledge, practical training and projects.</p>
       </div>
       <div class="prog-card" aria-hidden="true">
-        <span class="num">03</span>
         <h3>Diploma Programs</h3>
         <p>Deeper specialization for developing advanced technical and professional competence.</p>
       </div>
       <div class="prog-card" aria-hidden="true">
-        <span class="num">04</span>
         <h3>Executive Education</h3>
         <p>Programs designed for C-suite executives, senior leaderships and managers.</p>
       </div>
       <div class="prog-card" aria-hidden="true">
-        <span class="num">05</span>
         <h3>Professional Development</h3>
         <p>Upskilling and reskilling programs for working professionals.</p>
       </div>
       <div class="prog-card" aria-hidden="true">
-        <span class="num">06</span>
         <h3>Workshops &amp; Bootcamps</h3>
         <p>Intensive, hands-on experiences focused on technology, innovation and entrepreneurship.</p>
       </div>
       <div class="prog-card" aria-hidden="true">
-        <span class="num">07</span>
         <h3>Collaborative Certifications</h3>
         <p>Programs delivered in collaboration with universities, industries, technology organizations and international partners.</p>
       </div>
