@@ -384,6 +384,7 @@
     .about-grid{grid-template-columns:1fr;}
     .about-visual{order:-1;}
     .eco-grid{grid-template-columns:repeat(3,1fr);}
+    .eco-grid>*:nth-child(16){grid-column:2;}  /* 16 tiles = 5 full rows of 3 + 1: centre the last one */
     .ex-grid{grid-template-columns:repeat(2,1fr);}
     .prog-grid{grid-template-columns:repeat(2,1fr);}
     .prog-card.span2{grid-column:span 1;}
@@ -452,6 +453,8 @@
     .eco-grid>*:nth-child(12){order:13;}
     .eco-grid>*:nth-child(13){order:7;}
     .eco-grid>*:nth-child(14){order:14;}
+    .eco-grid>*:nth-child(15){order:15;}
+    .eco-grid>*:nth-child(16){order:16;}
 
     .mv-cards{grid-template-columns:1fr;}
     .mv-card{text-align:center;}
@@ -582,6 +585,8 @@
           <div class="eco-item reveal reveal-scale"><img src="assets/icon-online.svg" alt=""><span>Online Learning</span></div>
           <div class="eco-item reveal reveal-scale"><img src="assets/icon-skill.svg" alt=""><span>Skill Development</span></div>
           <div class="eco-item reveal reveal-scale"><img src="assets/icon-fintech.svg" alt=""><span>Fintech</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-quantum.svg" alt=""><span>Quantum Computing</span></div>
+          <div class="eco-item reveal reveal-scale"><img src="assets/icon-semiconductor.svg" alt=""><span>Semiconductor</span></div>
         </div>
 
         <p>I⁴ (I Power 4) is designed to serve students, educators, researchers, working professionals, industry personnel, managers, entrepreneurs, C-suite executives, government organizations, educational institutions, startups, and corporations.</p>
@@ -689,6 +694,18 @@
       <img src="assets/excellence-7.jpg" alt="Fintech">
       <h3>Fintech</h3>
       <p>Digital payments, blockchain, algorithmic finance, RegTech &amp; AI-driven risk analytics.</p>
+      <hr>
+    </div>
+    <div class="ex-card reveal">
+      <img src="assets/excellence-8.jpg" alt="Quantum Computing">
+      <h3>Quantum Computing</h3>
+      <p>Quantum algorithms, qubit hardware, quantum cryptography &amp; hybrid quantum-classical computing.</p>
+      <hr>
+    </div>
+    <div class="ex-card reveal">
+      <img src="assets/excellence-9.jpg" alt="Semiconductor">
+      <h3>Semiconductor</h3>
+      <p>Chip design, VLSI, fabrication, embedded systems &amp; advanced packaging.</p>
       <hr>
     </div>
   </div>
